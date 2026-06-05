@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serbin — Developer Stat Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f4f3ef;
+    color: #1a1a18;
+    min-height: 100vh;
+    padding: 2.5rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 780px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Header */
+  .profile-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 1.5rem 1.75rem;
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #e2e1da;
+  }
+  .avatar {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: #EEEDFE;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 500; color: #3C3489;
+    flex-shrink: 0;
+  }
+  .profile-info h1 {
+    font-size: 17px; font-weight: 500; color: #1a1a18; margin-bottom: 3px;
+  }
+  .profile-info p {
+    font-size: 12px; color: #888780; margin-bottom: 8px;
+  }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 5px; }
+  .badge {
+    font-size: 11px; padding: 3px 9px;
+    border-radius: 6px; font-weight: 500;
+  }
+  .b-purple { background: #EEEDFE; color: #3C3489; }
+  .b-teal   { background: #E1F5EE; color: #085041; }
+  .b-coral  { background: #FAECE7; color: #712B13; }
+  .b-blue   { background: #E6F1FB; color: #0C447C; }
+  .b-amber  { background: #FAEEDA; color: #633806; }
+
+  /* Section label */
+  .slabel {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; color: #888780;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+
+  /* Main stat cards */
+  .main-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+  }
+  .mcard {
+    background: #fff;
+    border: 1px solid #e2e1da;
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .mcard-top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .mcard-name { font-size: 12px; color: #888780; }
+  .mcard-score { font-size: 22px; font-weight: 500; }
+  .bar-bg {
+    height: 4px; background: #e8e7e0;
+    border-radius: 4px; overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%; border-radius: 4px;
+    transition: width 1.3s cubic-bezier(.4,0,.2,1);
+  }
+  .mcard-note { font-size: 11px; color: #a8a79e; margin-top: 6px; }
+
+  /* Radar */
+  .radar-panel {
+    background: #fff;
+    border: 1px solid #e2e1da;
+    border-radius: 16px;
+    padding: 1.5rem 1.75rem;
+  }
+  .chart-wrap { position: relative; width: 100%; height: 280px; }
+
+  /* Skill groups */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  @media (max-width: 560px) {
+    .skills-grid { grid-template-columns: 1fr; }
+    .main-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .skill-panel {
+    background: #fff;
+    border: 1px solid #e2e1da;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+  }
+  .skill-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 8px; font-size: 12px;
+  }
+  .skill-name { color: #666663; flex: 1; }
+  .dots { display: flex; gap: 4px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .d-purple { background: #534AB7; }
+  .d-teal   { background: #1D9E75; }
+  .d-coral  { background: #D85A30; }
+  .d-blue   { background: #378ADD; }
+  .d-amber  { background: #BA7517; }
+  .d-empty  { background: #e2e1da; }
+
+  /* Hidden stats */
+  .hidden-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .hcard {
+    background: #fff;
+    border: 1px solid #e2e1da;
+    border-radius: 12px;
+    padding: 16px; text-align: center;
+  }
+  .hval { font-size: 28px; font-weight: 500; margin-bottom: 4px; }
+  .hlabel { font-size: 11px; color: #888780; line-height: 1.5; }
+
+  /* Class card */
+  .class-card {
+    background: #fff;
+    border: 1px solid #e2e1da;
+    border-left: 3px solid #534AB7;
+    border-radius: 0 12px 12px 0;
+    padding: 1.25rem 1.5rem;
+    display: flex; gap: 16px; align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .lv-badge {
+    background: #EEEDFE; color: #3C3489;
+    font-size: 11px; font-weight: 500;
+    padding: 4px 10px; border-radius: 6px;
+    white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+  }
+  .class-body .class-name {
+    font-size: 15px; font-weight: 500; color: #1a1a18; margin-bottom: 6px;
+  }
+  .class-body .class-desc {
+    font-size: 12px; color: #666663; line-height: 1.7;
+  }
+  .jobs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .job-tag {
+    font-size: 11px; padding: 3px 10px;
+    border-radius: 6px;
+    background: #f4f3ef; color: #888780;
+    border: 1px solid #e2e1da;
+  }
+
+  /* Note */
+  .note-box {
+    background: #fff;
+    border: 1px solid #e2e1da;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    font-size: 12px; color: #888780; line-height: 1.7;
+  }
+  .note-box strong { color: #1a1a18; }
+  .c-agree { background: #E1F5EE; color: #085041; font-size: 10px; padding: 2px 7px; border-radius: 5px; font-weight: 500; }
+  .c-diff  { background: #FAEEDA; color: #633806; font-size: 10px; padding: 2px 7px; border-radius: 5px; font-weight: 500; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; color: #bcbab2;
+    padding-top: 0.5rem;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Profile -->
+  <div class="profile-header">
+    <div class="avatar">S</div>
+    <div class="profile-info">
+      <h1>Serbin — Developer Stat Card v2</h1>
+      <p>Claude 분석 × ChatGPT 분석 교차 종합</p>
+      <div class="badge-row">
+        <span class="badge b-purple">Gameplay Programmer</span>
+        <span class="badge b-teal">System Designer</span>
+        <span class="badge b-coral">Technical Artist</span>
+        <span class="badge b-blue">CS Theorist</span>
+        <span class="badge b-amber">Indie Director</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main stats -->
+  <div>
+    <p class="slabel">핵심 능력치 — 두 분석 교차 보정</p>
+    <div class="main-grid" id="mainGrid"></div>
+  </div>
+
+  <!-- Radar -->
+  <div class="radar-panel">
+    <p class="slabel">종합 레이더 — 실선 Claude · 점선 ChatGPT</p>
+    <div class="chart-wrap">
+      <canvas id="radarChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Skill groups -->
+  <div>
+    <p class="slabel">세부 스킬</p>
+    <div class="skills-grid">
+      <div class="skill-panel">
+        <p class="slabel">엔진 &amp; 렌더링</p>
+        <div id="s1"></div>
+      </div>
+      <div class="skill-panel">
+        <p class="slabel">프로그래밍 &amp; 설계</p>
+        <div id="s2"></div>
+      </div>
+      <div class="skill-panel">
+        <p class="slabel">CS 이론</p>
+        <div id="s3"></div>
+      </div>
+      <div class="skill-panel">
+        <p class="slabel">3D 아트 파이프라인</p>
+        <div id="s4"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden stats -->
+  <div>
+    <p class="slabel">숨겨진 능력치 (ChatGPT 분석 추가 반영)</p>
+    <div class="hidden-grid">
+      <div class="hcard">
+        <div class="hval" style="color:#534AB7">93</div>
+        <div class="hlabel">추상화 능력<br><span style="font-size:10px;color:#bcbab2">설계 레벨 사고</span></div>
+      </div>
+      <div class="hcard">
+        <div class="hval" style="color:#1D9E75">92</div>
+        <div class="hlabel">학습 능력<br><span style="font-size:10px;color:#bcbab2">개념→구조→응용 순환</span></div>
+      </div>
+      <div class="hcard">
+        <div class="hval" style="color:#D85A30">89</div>
+        <div class="hlabel">창의성<br><span style="font-size:10px;color:#bcbab2">FPS×TD 결합 등</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Class card -->
+  <div class="class-card">
+    <div class="lv-badge">Lv. 27 — 두 분석 동의</div>
+    <div class="class-body">
+      <div class="class-name">게임플레이 프로그래머 / Indie Technical Director</div>
+      <div class="class-desc">
+        "코드를 잘 짜는 사람"이 아닌 <strong>"게임 전체 구조를 설계하고 구현 방향을 결정하는 사람"</strong>.
+        원래 3D 아티스트 배경 덕에 비주얼 언어와 기술 구현을 동시에 사고함.
+        질문 패턴이 "어떻게 구현할까?"보다 "어떤 구조가 좋은가?"에 집중 — 시니어 사고방식.
+      </div>
+      <div class="jobs">
+        <span class="job-tag">AAA 게임플레이 프로그래머</span>
+        <span class="job-tag">Indie TD / CTO</span>
+        <span class="job-tag">Technical Game Designer</span>
+        <span class="job-tag">Technical Artist</span>
+        <span class="job-tag">소규모 스튜디오 창업</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Analysis note -->
+  <div class="note-box">
+    <strong>두 분석의 교차점</strong><br>
+    두 LLM 모두 독립적으로 <span class="c-agree">공통</span> 시스템 설계·추상화 능력을 최상위로 평가. UE5 숙련도·3D 파이프라인·학습 속도도 일치.
+    <span class="c-diff">차이</span> ChatGPT은 게임 기획(90)·알고리즘(80)을 별도 항목으로 고려; Claude 분석은 CS 이론·네트워킹·크래시 디버깅을 더 높이 반영.
+    두 분석을 합치면 <em>기술 아티스트 + 시스템 설계자 + 기획자</em>의 희귀한 교집합.
+  </div>
+
+  <div class="footer">Generated by Claude — based on conversation history analysis</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const mstats = [
+  { name: '시스템 설계',      score: 93, color: '#534AB7', note: '두 분석 모두 최상위' },
+  { name: 'UE5 엔진',         score: 88, color: '#378ADD', note: '프레임워크 전반 경험자' },
+  { name: '게임 기획',        score: 90, color: '#1D9E75', note: '구조·비주얼·루프 동시 사고' },
+  { name: '렌더링 / VFX',     score: 85, color: '#BA7517', note: '원리 관점 질문 패턴' },
+  { name: 'C++ 프로그래밍',   score: 82, color: '#D85A30', note: '주니어~미들급 이상' },
+  { name: '3D 파이프라인',    score: 82, color: '#888780', note: '3D 아티스트 배경 보유' },
+  { name: 'CS 이론',          score: 80, color: '#3C3489', note: 'OS·네트워크 심층 탐구' },
+  { name: '팀 협업',          score: 73, color: '#5F5E5A', note: '디버깅·이슈 해결 중심' },
+];
+
+const grid = document.getElementById('mainGrid');
+mstats.forEach(s => {
+  const el = document.createElement('div');
+  el.className = 'mcard';
+  el.innerHTML = `
+    <div class="mcard-top">
+      <span class="mcard-name">${s.name}</span>
+      <span class="mcard-score" style="color:${s.color}">${s.score}</span>
+    </div>
+    <div class="bar-bg"><div class="bar-fill" style="width:0%;background:${s.color}" data-w="${s.score}"></div></div>
+    <div class="mcard-note">${s.note}</div>
+  `;
+  grid.appendChild(el);
+});
+setTimeout(() => {
+  document.querySelectorAll('.bar-fill').forEach(b => b.style.width = b.dataset.w + '%');
+}, 150);
+
+const skillSets = [
+  { id: 's1', cls: 'd-amber', items: [
+    ['Niagara VFX', 4], ['Material 시스템', 5], ['UMG / UI', 4], ['Post-Process', 4], ['Packaging / 배포', 3],
+  ]},
+  { id: 's2', cls: 'd-purple', items: [
+    ['시스템 아키텍처', 5], ['UObject / 계층', 4], ['Delegate / Event', 4], ['STL / 컨테이너', 4], ['크래시 디버깅', 4],
+  ]},
+  { id: 's3', cls: 'd-blue', items: [
+    ['OS / 메모리 관리', 4], ['TCP/UDP / 네트워크', 4], ['CPU 캐시 계층', 4], ['프로세스 / 스레드', 4], ['보안 기초', 3],
+  ]},
+  { id: 's4', cls: 'd-coral', items: [
+    ['3ds Max 리깅 / Biped', 5], ['루트모션 베이킹', 4], ['Blender', 3], ['PBR 머티리얼', 4], ['애니메이션 수정', 4],
+  ]},
+];
+
+skillSets.forEach(({ id, cls, items }) => {
+  const el = document.getElementById(id);
+  items.forEach(([name, lv]) => {
+    const row = document.createElement('div');
+    row.className = 'skill-row';
+    let dots = '';
+    for (let i = 0; i < 5; i++) dots += `<div class="dot ${i < lv ? cls : 'd-empty'}"></div>`;
+    row.innerHTML = `<span class="skill-name">${name}</span><div class="dots">${dots}</div>`;
+    el.appendChild(row);
+  });
+});
+
+new Chart(document.getElementById('radarChart'), {
+  type: 'radar',
+  data: {
+    labels: ['시스템 설계', '추상화 사고', '학습 능력', '게임 기획', 'UE5 엔진', '렌더링/VFX', '3D 파이프라인', 'C++ 프로그래밍', 'CS 이론', '팀 협업'],
+    datasets: [
+      {
+        label: 'Claude 분석',
+        data: [93, 93, 92, 88, 88, 85, 82, 78, 80, 72],
+        backgroundColor: 'rgba(83,74,183,0.12)',
+        borderColor: '#534AB7',
+        borderWidth: 2,
+        pointBackgroundColor: '#534AB7',
+        pointRadius: 3,
+      },
+      {
+        label: 'ChatGPT 분석',
+        data: [92, 93, 94, 90, 87, 82, 83, 85, 78, 75],
+        backgroundColor: 'rgba(29,158,117,0.10)',
+        borderColor: '#1D9E75',
+        borderWidth: 2,
+        borderDash: [5, 3],
+        pointBackgroundColor: '#1D9E75',
+        pointRadius: 3,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'bottom',
+        labels: {
+          font: { family: "'DM Mono', monospace", size: 11 },
+          color: '#888780',
+          boxWidth: 12, boxHeight: 2, padding: 16,
+        }
+      }
+    },
+    scales: {
+      r: {
+        min: 60, max: 100,
+        ticks: {
+          stepSize: 10,
+          color: '#bcbab2',
+          font: { size: 10, family: "'DM Mono', monospace" },
+          backdropColor: 'transparent'
+        },
+        grid: { color: 'rgba(0,0,0,0.07)' },
+        angleLines: { color: 'rgba(0,0,0,0.07)' },
+        pointLabels: { color: '#666663', font: { size: 11, family: "'DM Sans', sans-serif" } }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>

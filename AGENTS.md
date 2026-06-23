@@ -25,10 +25,34 @@ Codex가 이 폴더에서 실행되면 먼저 이 문서를 읽고, 아래 기�
 새 작업을 시작하기 전에 다음 문서를 우선 확인한다.
 
 1. `Docs/InitialConcept.md`
-2. `Docs/SubDocuments/CameraViewpointComparison.md`
-3. `Docs/SubDocuments/Week1_TeamPlan.md`
-4. `ConceptArt/StorybookWorld_ConceptGuide.md`
-5. 관련 작업이 동화 원전, 캐릭터 후보, 세계관 소재를 다루는 경우 `Docs/FairyTales/` 하위 문서
+2. `Docs/SubDocuments/WorkspaceStatusAndStartup.md`
+3. `Docs/SubDocuments/MVPScopeDecision.md`
+4. `Docs/SubDocuments/CameraViewpointComparison.md`
+5. `Docs/SubDocuments/Week1_TeamPlan.md`
+6. `ConceptArt/StorybookWorld_ConceptGuide.md`
+7. 관련 작업이 동화 원전, 캐릭터 후보, 세계관 소재를 다루는 경우 `Docs/FairyTales/` 하위 문서
+
+## 실행 시작 절차
+
+Codex가 이 폴더에서 새로 실행되면 다음 순서로 작업 준비를 한다.
+
+1. `git status --short`로 현재 변경 상태를 확인한다.
+2. `rg --files` 또는 가능한 빠른 파일 목록 명령으로 폴더 전체 산출물을 훑는다.
+3. Trello를 사용할 수 있으면 기본 활성 보드를 아래 "Trello 기본 보드" 기준으로 설정한다.
+4. 위 "먼저 읽을 문서" 목록을 읽고 현재 결정, 열린 질문, 다음 액션을 확인한다.
+5. 사용자가 구체적인 작업을 주지 않았다면 `WorkspaceStatusAndStartup.md`의 "가장 가까운 다음 액션" 중 하나를 선택해 기획 산출물로 좁힌다.
+6. 문서 변경 전에는 기존 문서와 중복되는지 확인하고, 변경 후에는 수정 파일과 핵심 결정을 짧게 보고한다.
+
+## Trello 기본 보드
+
+이 작업폴더에서 Trello 작업을 할 때는 다음 보드를 기본 활성 보드로 사용한다.
+
+- 보드 이름: `FieryTale`
+- 짧은 보드 ID: `Zx9zFR6a`
+- 내부 보드 ID: `6a3a21b44eb622271cb44349`
+- URL: `https://trello.com/b/Zx9zFR6a`
+
+Trello 카드, 리스트, 라벨, 체크리스트를 조회하거나 생성할 때 사용자가 다른 보드를 명시하지 않으면 이 보드를 기준으로 처리한다.
 
 ## 현재 기획 상태
 
@@ -76,9 +100,10 @@ Codex가 이 폴더에서 실행되면 먼저 이 문서를 읽고, 아래 기�
 사용자가 별도 지시 없이 "기획 이어서 하자", "다음 단계 진행", "정리해줘"처럼 요청하면 다음 흐름을 따른다.
 
 1. 관련 기존 문서를 확인한다.
-2. 현재 쟁점 중 하나를 좁혀서 산출물로 만든다.
-3. 막연한 아이디어보다 프로토타입에 바로 영향을 주는 규칙, 표, 체크리스트를 우선 작성한다.
-4. 문서 변경 후 변경 파일과 핵심 내용을 짧게 보고한다.
+2. 폴더 전체 상태가 오래되었거나 불명확하면 `WorkspaceStatusAndStartup.md`를 갱신한다.
+3. 현재 쟁점 중 하나를 좁혀서 산출물로 만든다.
+4. 막연한 아이디어보다 프로토타입에 바로 영향을 주는 규칙, 표, 체크리스트를 우선 작성한다.
+5. 문서 변경 후 변경 파일과 핵심 내용을 짧게 보고한다.
 
 사용자가 아이디어 검토를 요청하면 코드나 파일을 바로 수정하기보다, 먼저 장단점과 추천안을 정리한다.
 

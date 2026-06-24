@@ -12,7 +12,7 @@
 |---|---|---|
 | `AGENTS.md` | 존재 | Codex 작업 규칙과 우선순위 |
 | `Docs/InitialConcept.md` | 존재 | 프로젝트 기본 기획, 장르, MVP 방향 |
-| `Docs/SubDocuments/` | 존재 | 시점, MVP 범위, 성장 구조, 주차별 계획 등 세부 기획 |
+| `Docs/SubDocuments/` | 존재 | 시점, MVP 범위, 코어 매치 규칙, 성장 구조, 주차별 계획 등 세부 기획 |
 | `Docs/FairyTales/` | 존재 | 원전 동화/설화 후보와 선정 기준 |
 | `Docs/Character/` | 존재 | 캐릭터 후보별 콘셉트 문서 |
 | `ConceptArt/` | 존재 | 배경/캐릭터 콘셉트 가이드와 이미지 산출물 |
@@ -29,8 +29,10 @@
 3. `Docs/SubDocuments/WorkspaceStatusAndStartup.md`
 4. `Docs/SubDocuments/MVPScopeDecision.md`
 5. `Docs/SubDocuments/CameraViewpointComparison.md`
-6. `Docs/SubDocuments/Week1_TeamPlan.md`
-7. `ConceptArt/StorybookWorld_ConceptGuide.md`
+6. `Docs/SubDocuments/MVPViewpointDecision.md`
+7. `Docs/SubDocuments/CoreMatchRules.md`
+8. `Docs/SubDocuments/Week1_TeamPlan.md`
+9. `ConceptArt/StorybookWorld_ConceptGuide.md`
 
 캐릭터, 원전, 세계관 소재를 다루는 작업이면 추가로 다음을 확인한다.
 
@@ -44,6 +46,7 @@
 | 항목 | 현재 기준 |
 |---|---|
 | 장르 축 | TPS 팀 전투와 단순 AOS 목표의 절충형 |
+| MVP 시점 | TPS 확정. 캐릭터 뒤쪽 위에서 보는 TPS 카메라를 기준으로 한다. |
 | 초기 매치 규모 | 2 vs 2 |
 | 2주 MVP 최소 검증 | 최소 1 vs 1로도 한 판 완료 가능 |
 | 서버 구조 | Listen Server 필수, Dedicated Server는 선택 목표 |
@@ -51,6 +54,7 @@
 | 전장 | 2라인, 팀별 넥서스 1개, 팀별 1단계 방어타워 |
 | 미니언 | 2주 MVP 제외, 3주차 이후 선택 확장 |
 | 성장 | 1차 MVP에서는 성장 구조 제거 권장 |
+| 코어 매치 규칙 | 로비, 팀 배정, 스폰, 사망, 5초 리스폰, 타워 파괴, 넥서스 취약화, 넥서스 파괴 승패 흐름 작성 완료 |
 | 캐릭터 기반 | `BaseCharacter` 1종과 GAS Ability 슬롯 구조 우선 |
 | 스킬 입력 | 기본 공격, 공격 스킬, 이동 스킬, 궁극기 |
 | 구조물 | `TowerBase` 공통 구조, 방어타워와 넥서스 확장 가능하게 설계 |
@@ -62,7 +66,7 @@
 
 | 질문 | 현재 판단 |
 |---|---|
-| MVP 시점은 TPS인가, 쿼터뷰인가? | 문서상 TPS 절충형으로 기울었지만, 리스크 관점의 최종 결정 문서가 필요하다. |
+| MVP 시점은 TPS인가, 쿼터뷰인가? | `MVPViewpointDecision.md`에서 TPS로 확정했다. |
 | 한 매치 목표 시간은 몇 분인가? | 미정. 4주 프로토타입 기준 8~12분 후보 검토가 필요하다. |
 | 캐릭터 역할군을 어떻게 나눌 것인가? | 미정. 전통 역할군보다 2 vs 2 기능 역할 중심 검토가 필요하다. |
 | 초기 캐릭터 2종은 누구인가? | 미정. Data Table 검증용 테스트 캐릭터와 최종 후보를 분리해야 한다. |
@@ -74,9 +78,9 @@
 구체적인 사용자 지시가 없으면 다음 순서로 진행한다.
 
 1. `Docs/SubDocuments/MVPViewpointDecision.md` 작성
-   - TPS 유지, 낮은 쿼터뷰, 순수 쿼터뷰 중 4주 MVP 기준 결정을 확정한다.
+   - 작성 완료. MVP 시점은 TPS로 확정한다.
 2. `Docs/SubDocuments/CoreMatchRules.md` 작성
-   - 팀, 스폰, 로비, 매치 시작, 사망, 리스폰, 구조물, 승패 규칙을 구현 가능한 규칙으로 고정한다.
+   - 작성 완료. 팀, 스폰, 로비, 매치 시작, 사망, 리스폰, 구조물, 승패 규칙을 구현 가능한 규칙으로 고정했다.
 3. `Docs/SubDocuments/GASCombatPlanning.md` 작성
    - Attribute, Ability, GameplayEffect, GameplayTag, 서버 권한 판정 기준을 초안으로 정리한다.
 4. `Docs/SubDocuments/InitialCharacterRoles.md` 작성
@@ -114,6 +118,6 @@ Get-ChildItem -Recurse -Force Dev
 
 현재는 기획 산출물 정리가 우선이다.
 
-가장 먼저 좁힐 쟁점은 MVP 시점 결정이다. `CameraViewpointComparison.md`와 `MVPScopeDecision.md`를 기준으로, 4주 프로토타입에서 TPS 절충형을 유지할지 낮은 쿼터뷰로 리스크를 줄일지 결정 문서를 작성하는 것이 좋다.
+MVP 시점과 코어 매치 규칙은 문서화가 완료되었다.
 
-그다음에는 `CoreMatchRules.md`를 작성해 실제 구현자가 바로 GameMode, GameState, PlayerState, 구조물 Actor, 리스폰 흐름으로 분해할 수 있게 만든다.
+다음으로는 `GASCombatPlanning.md`를 작성해 실제 구현자가 AttributeSet, GameplayAbility, GameplayEffect, GameplayTag, 서버 권한 피해 판정으로 바로 분해할 수 있게 만든다. 이후 `InitialCharacterRoles.md`와 `PrototypeBacklog.md`로 이어가는 것이 좋다.

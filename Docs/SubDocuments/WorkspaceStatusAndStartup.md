@@ -12,7 +12,7 @@
 |---|---|---|
 | `AGENTS.md` | 존재 | Codex 작업 규칙과 우선순위 |
 | `Docs/InitialConcept.md` | 존재 | 프로젝트 기본 기획, 장르, MVP 방향 |
-| `Docs/SubDocuments/` | 존재 | 시점, MVP 범위, 코어 매치 규칙, 성장 구조, 주차별 계획 등 세부 기획 |
+| `Docs/SubDocuments/` | 존재 | 시점, MVP 범위, 코어 매치 규칙, 5인 작업 분류, 성장 구조, 주차별 계획 등 세부 기획 |
 | `Docs/FairyTales/` | 존재 | 원전 동화/설화 후보와 선정 기준 |
 | `Docs/Character/` | 존재 | 캐릭터 후보별 콘셉트 문서 |
 | `ConceptArt/` | 존재 | 배경/캐릭터 콘셉트 가이드와 이미지 산출물 |
@@ -31,8 +31,9 @@
 5. `Docs/SubDocuments/CameraViewpointComparison.md`
 6. `Docs/SubDocuments/MVPViewpointDecision.md`
 7. `Docs/SubDocuments/CoreMatchRules.md`
-8. `Docs/SubDocuments/Week1_TeamPlan.md`
-9. `ConceptArt/StorybookWorld_ConceptGuide.md`
+8. `Docs/SubDocuments/FivePersonWorkCategories.md`
+9. `Docs/SubDocuments/Week1_TeamPlan.md`
+10. `ConceptArt/StorybookWorld_ConceptGuide.md`
 
 캐릭터, 원전, 세계관 소재를 다루는 작업이면 추가로 다음을 확인한다.
 
@@ -55,6 +56,7 @@
 | 미니언 | 2주 MVP 제외, 3주차 이후 선택 확장 |
 | 성장 | 1차 MVP에서는 성장 구조 제거 권장 |
 | 코어 매치 규칙 | 로비, 팀 배정, 스폰, 사망, 5초 리스폰, 타워 파괴, 넥서스 취약화, 넥서스 파괴 승패 흐름 작성 완료 |
+| 5인 작업 분류 | 네트워크/매치 흐름, 캐릭터/TPS 조작, GAS/전투, 전장/구조물, UI/로비/데이터/QA로 분류 완료 |
 | 캐릭터 기반 | `BaseCharacter` 1종과 GAS Ability 슬롯 구조 우선 |
 | 스킬 입력 | 기본 공격, 공격 스킬, 이동 스킬, 궁극기 |
 | 구조물 | `TowerBase` 공통 구조, 방어타워와 넥서스 확장 가능하게 설계 |
@@ -81,11 +83,13 @@
    - 작성 완료. MVP 시점은 TPS로 확정한다.
 2. `Docs/SubDocuments/CoreMatchRules.md` 작성
    - 작성 완료. 팀, 스폰, 로비, 매치 시작, 사망, 리스폰, 구조물, 승패 규칙을 구현 가능한 규칙으로 고정했다.
-3. `Docs/SubDocuments/GASCombatPlanning.md` 작성
+3. `Docs/SubDocuments/FivePersonWorkCategories.md` 작성
+   - 작성 완료. 5명 작업자를 위한 큰 작업 분류와 책임 범위를 정리했다.
+4. `Docs/SubDocuments/GASCombatPlanning.md` 작성
    - Attribute, Ability, GameplayEffect, GameplayTag, 서버 권한 판정 기준을 초안으로 정리한다.
-4. `Docs/SubDocuments/InitialCharacterRoles.md` 작성
+5. `Docs/SubDocuments/InitialCharacterRoles.md` 작성
    - 2 vs 2 기준 역할군과 초기 2종 캐릭터 후보를 정리한다.
-5. `Docs/SubDocuments/PrototypeBacklog.md` 작성
+6. `Docs/SubDocuments/PrototypeBacklog.md` 작성
    - 4주 프로토타입 기능 백로그, 우선순위, 담당 영역, 완료 기준을 표로 정리한다.
 
 ## 시작 시 확인할 명령
@@ -118,6 +122,6 @@ Get-ChildItem -Recurse -Force Dev
 
 현재는 기획 산출물 정리가 우선이다.
 
-MVP 시점과 코어 매치 규칙은 문서화가 완료되었다.
+MVP 시점, 코어 매치 규칙, 5인 작업 분류는 문서화가 완료되었다.
 
-다음으로는 `GASCombatPlanning.md`를 작성해 실제 구현자가 AttributeSet, GameplayAbility, GameplayEffect, GameplayTag, 서버 권한 피해 판정으로 바로 분해할 수 있게 만든다. 이후 `InitialCharacterRoles.md`와 `PrototypeBacklog.md`로 이어가는 것이 좋다.
+다음으로는 `GASCombatPlanning.md`를 작성해 실제 구현자가 AttributeSet, GameplayAbility, GameplayEffect, GameplayTag, 서버 권한 피해 판정으로 바로 분해할 수 있게 만든다. 동시에 Trello `ThisWeek`에는 `FivePersonWorkCategories.md` 기준으로 1주차 핵심 카드만 이동하는 것이 좋다.
